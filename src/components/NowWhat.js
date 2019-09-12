@@ -1,21 +1,43 @@
-import React from "react";
-import Card from "@material-ui/core/Card";
-import CardHeader from "./CardHeader";
-import Typography from "@material-ui/core/Typography";
-import CardContent from "@material-ui/core/CardContent";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { makeStyles } from "@material-ui/core/styles";
-import Avatar from "./Avatar";
+import React, { useEffect } from 'react';
+import Card from '@material-ui/core/Card';
+import CardHeader from './CardHeader';
+import Typography from '@material-ui/core/Typography';
+import CardContent from '@material-ui/core/CardContent';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from '@material-ui/core/styles';
+import Avatar from './Avatar';
+
+import { gql } from 'apollo-boost';
+import Client from '../store/api/ClientAPI';
 
 const useStyles = makeStyles({
   card: {
-    margin: "5% 25%"
+    margin: '5% 25%'
   }
 });
 
 export default () => {
+  // useEffect(() => {
+  //   console.log('martin');
+
+  //   Client
+  //     .query({
+  //       query: gql`
+  //         {
+  //           getLastKnownMeasurement(metricName: "tubingPressure") {
+  //             metric,
+  //             at,
+  //             value,
+  //             unit
+  //           }
+  //         }
+  //       `
+  //     })
+  //     .then(result => console.log(result));
+  // });
+
   const classes = useStyles();
   return (
     <Card className={classes.card}>
@@ -45,10 +67,10 @@ export default () => {
         </List>
 
         <Typography variant="body1">
-          Remember to refer to our{" "}
+          Remember to refer to our{' '}
           <a href="https://react.eogresources.com/assessing">
             How We Assess Submissions
-          </a>{" "}
+          </a>{' '}
           guidelines.
         </Typography>
       </CardContent>
