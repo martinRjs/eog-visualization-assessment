@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardHeader from './CardHeader';
 import Typography from '@material-ui/core/Typography';
@@ -9,9 +9,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from './Avatar';
 
-import { gql } from 'apollo-boost';
-import Client from '../store/api/ClientAPI';
-
 const useStyles = makeStyles({
   card: {
     margin: '5% 25%'
@@ -19,25 +16,6 @@ const useStyles = makeStyles({
 });
 
 export default () => {
-  // useEffect(() => {
-  //   console.log('martin');
-
-  //   Client
-  //     .query({
-  //       query: gql`
-  //         {
-  //           getLastKnownMeasurement(metricName: "tubingPressure") {
-  //             metric,
-  //             at,
-  //             value,
-  //             unit
-  //           }
-  //         }
-  //       `
-  //     })
-  //     .then(result => console.log(result));
-  // });
-
   const classes = useStyles();
   return (
     <Card className={classes.card}>
