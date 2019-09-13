@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { getLastKnownMeasurement } from '../store/api/metricsAPI';
+import { Query } from 'react-apollo'
+import queries from '../store/api/queries';
 
 const useStyles = makeStyles({
   infoCard: {
@@ -22,31 +23,27 @@ const useStyles = makeStyles({
   }
 });
 
-const InfoCard = ({ name, display, currentValue, toggle, update }) => {
+const InfoCard = ({ name, display, toggle }) => {
   const classes = useStyles();
-
-  useEffect(() => {
-    let interval = 0;
-    
-    if (display) {
-      interval = setInterval(() => {
-        getLastKnownMeasurement(name).then(({ data }) => {
-          update(name, data.getLastKnownMeasurement.value)
-        });
-      }, 1500);
-    }
-
-    return () => clearInterval(interval);
-
-  }, [name, display, currentValue]);
-
   return (
     <Card className={display ? classes.infoCard : classes.disabledCard} onClick={() => toggle(name)}>
       <CardContent>
         <Typography>{name}</Typography>
         {
-          display ? <Typography variant="h4">{currentValue}</Typography> :
-            <Typography variant="h4">{currentValue}</Typography>
+          display ?
+            <Query query={queries[name]} pollInterval={1300}>
+              {({ loading, error, data }) => {
+                if (loading) return "Loading...";
+                if (error) return `Error! ${error.message}`;
+
+                return (
+                  <span>
+                    <Typography variant="h4">{data.getLastKnownMeasurement.value}</Typography>
+                  </span>
+                );
+              }}
+            </Query> :
+            <Typography variant="h4">-</Typography>
         }
       </CardContent>
     </Card>

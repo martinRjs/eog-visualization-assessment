@@ -15,9 +15,7 @@ const useStyles = makeStyles({
   }
 });
 
-
 const Dashboard = ({ metrics, toggle, update }) => {
-
   const classes = useStyles();
   return (
     <ApolloProvider client={client}>
@@ -25,7 +23,7 @@ const Dashboard = ({ metrics, toggle, update }) => {
         <h1>Dashboard</h1>
         <div className={classes.cardContainer}>
           {Object.keys(metrics).map((name, i) =>
-            <InfoCard key={i} {...metrics[name]} toggle={toggle} update={update}/>
+            <InfoCard key={i} {...metrics[name]} toggle={toggle} update={update} />
           )}
         </div>
       </Container>
@@ -52,6 +50,7 @@ const mapDispatchToProps = dispatch => ({
 const ConnectedDashboard = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dashboard)
+)(Dashboard);
 
 export default ConnectedDashboard;
+

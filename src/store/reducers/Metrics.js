@@ -14,37 +14,31 @@ const initialState = {
   [Metrics.FLARE_TEMP]: {
     name: Metrics.FLARE_TEMP,
     display: false,
-    currentValue: 0,
     data: []
   },
   [Metrics.INJ_VALVE_OPEN]: {
     name: Metrics.INJ_VALVE_OPEN,
     display: false,
-    currentValue: 0,
     data: []
   },
   [Metrics.TUBING_PRESSURE]: {
     name: Metrics.TUBING_PRESSURE,
     display: false,
-    currentValue: 0,
     data: []
   },
   [Metrics.OIL_TEMP]: {
     name: Metrics.OIL_TEMP,
     display: false,
-    currentValue: 0,
     data: []
   },
   [Metrics.WATER_TEMP]: {
     name: Metrics.WATER_TEMP,
     display: false,
-    currentValue: 0,
     data: []
   },
   [Metrics.CASING_PRESSURE]: {
     name: Metrics.CASING_PRESSURE,
     display: false,
-    currentValue: 0,
     data: []
   }
 };
@@ -59,19 +53,8 @@ const metricToggleHandler = (state, action) => {
   };
 }
 
-const metricUpdateHandler = (state, action) => {
-  return {
-    ...state,
-    [action.name]: {
-      ...state[action.name],
-      currentValue: action.value
-    }
-  };
-}
-
 const handlers = {
   [actions.METRIC_TOGGLE]: metricToggleHandler,
-  [actions.METRIC_UPDATE]: metricUpdateHandler
 }
 
 const MetricsReducer = (state = initialState, action) => {

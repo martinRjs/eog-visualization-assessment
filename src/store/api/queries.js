@@ -1,6 +1,17 @@
 import { gql } from 'apollo-boost';
 
 
+export const getLastMeasurement = gql`
+{
+  getLastKnownMeasurement(metricName: $name) {
+    metric,
+    value,
+    at
+  }
+}
+`;
+
+
 const tubingPressureLastMeasurement = gql`
 {
   getLastKnownMeasurement(metricName: "tubingPressure") {
@@ -61,6 +72,20 @@ const waterTempLastMeasurement = gql`
 }
 `;
 
+
+const LATEST_RESULTS = gql`
+{
+  getMultipleMeasurements(input: {metricName: "tubingPressure" after: $after}) {
+    metric,
+   	measurements {
+      metric,
+      value,
+      at,
+      unit
+    }
+  }
+}
+`;
 
 export default {
   "tubingPressure": tubingPressureLastMeasurement,
