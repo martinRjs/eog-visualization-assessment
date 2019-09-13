@@ -7,6 +7,7 @@
     "@material-ui/core": "^4.0.2",
     "@material-ui/icons": "^4.0.1",
     "apollo-boost": "^0.4.4",
+    "apollo-link-ws": "^1.0.19",
     "graphql": "^14.5.4",
     "isomorphic-fetch": "^2.2.1",
     "keyboardjs": "^2.5.1",
@@ -19,6 +20,7 @@
     "rebound": "^0.1.0",
     "redux": "^4.0.1",
     "redux-saga": "^1.0.3",
+    "subscriptions-transport-ws": "^0.9.16",
     "urql": "^1.1.1"
   },
   "scripts": {

@@ -4,7 +4,7 @@ import InfoCard from './InfoCard'
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import * as actions from "../store/actions";
-import client from '../store/api/ClientAPI';
+import client from '../store/api/metricsAPI';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 const useStyles = makeStyles({
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 });
 
 
-const Dashboard = ({ metrics, toggle }) => {
+const Dashboard = ({ metrics, toggle, update }) => {
 
   const classes = useStyles();
   return (
@@ -25,7 +25,7 @@ const Dashboard = ({ metrics, toggle }) => {
         <h1>Dashboard</h1>
         <div className={classes.cardContainer}>
           {Object.keys(metrics).map((name, i) =>
-            <InfoCard title={name} key={i} enabled={metrics[name].display} toggle={toggle} />
+            <InfoCard key={i} {...metrics[name]} toggle={toggle} update={update}/>
           )}
         </div>
       </Container>
@@ -41,6 +41,11 @@ const mapDispatchToProps = dispatch => ({
   toggle: (name) => dispatch({
     type: actions.METRIC_TOGGLE,
     name
+  }),
+  update: (name, value) => dispatch({
+    type: actions.METRIC_UPDATE,
+    name,
+    value
   })
 });
 

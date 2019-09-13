@@ -1,30 +1,17 @@
 import ApolloClient from 'apollo-boost';
-import { gql } from 'apollo-boost';
+import queries from './queries';
 
 const Client = new ApolloClient({
   uri: 'https://react.eogresources.com/graphql'
 });
 
-
 export const getLastKnownMeasurement = async (metricName) => {
-  console.log({ metricName });
-
-  const query = gql`
-  {
-    getLastKnownMeasurement(metricName: "waterTemp") {
-      metric,
-      at
-    }
-  }
-  `;
-  
   const response = await Client.query({
-    query,
-    variables: {
-      metricName
-    }
+    query: queries[metricName],
+    fetchPolicy: "network-only"
   });
 
+  console.log(response);
   return response;
 }
 

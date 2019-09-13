@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { getLastKnownMeasurement } from '../store/api/metricsAPI';
 
 const useStyles = makeStyles({
   infoCard: {
@@ -23,28 +22,31 @@ const useStyles = makeStyles({
   }
 });
 
-const LAST_MEASUREMENT = gql`
-{
-  getLastKnownMeasurement(metricName: "oilTemp") {
-    metric,
-    at
-  }
-}
-`;
-
-const InfoCard = ({ title, enabled, toggle}) => {
-
-  useQuery(LAST_MEASUREMENT);
-
-
+const InfoCard = ({ name, display, currentValue, toggle, update }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    let interval = 0;
+    
+    if (display) {
+      interval = setInterval(() => {
+        getLastKnownMeasurement(name).then(({ data }) => {
+          update(name, data.getLastKnownMeasurement.value)
+        });
+      }, 1500);
+    }
+
+    return () => clearInterval(interval);
+
+  }, [name, display, currentValue]);
+
   return (
-    <Card className={enabled ? classes.infoCard : classes.disabledCard} onClick={() => toggle(title)}>
+    <Card className={display ? classes.infoCard : classes.disabledCard} onClick={() => toggle(name)}>
       <CardContent>
-        <Typography>{title}</Typography>
+        <Typography>{name}</Typography>
         {
-          enabled ? <Typography variant="h4">408.91</Typography> :
-          <Typography variant="h4">OFF</Typography>
+          display ? <Typography variant="h4">{currentValue}</Typography> :
+            <Typography variant="h4">{currentValue}</Typography>
         }
       </CardContent>
     </Card>
