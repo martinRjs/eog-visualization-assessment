@@ -4,7 +4,8 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Query } from 'react-apollo'
-import queries from '../store/api/queries';
+import { getLastMeasurement } from '../store/api/queries';
+import '../../src/App.css';
 
 const useStyles = makeStyles({
   infoCard: {
@@ -23,19 +24,20 @@ const useStyles = makeStyles({
   }
 });
 
-const InfoCard = ({ name, display, toggle }) => {
+const InfoCard = ({ name, display, toggle, setData, updateValues }) => {
   const classes = useStyles();
   return (
-    <Card className={display ? classes.infoCard : classes.disabledCard} onClick={() => toggle(name)}>
+    <Card className={display ? classes.infoCard : classes.disabledCard}>
       <CardContent>
         <Typography>{name}</Typography>
+        <button onClick={() => toggle(name)}>On</button>
         {
           display ?
-            <Query query={queries[name]} pollInterval={1300}>
+            <Query query={getLastMeasurement} pollInterval={1300} variables={{ metricName: name }}>
               {({ loading, error, data }) => {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
-
+                updateValues(name, data.getLastKnownMeasurement.value);
                 return (
                   <span>
                     <Typography variant="h4">{data.getLastKnownMeasurement.value}</Typography>

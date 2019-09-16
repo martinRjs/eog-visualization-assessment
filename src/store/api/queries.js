@@ -1,9 +1,8 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
-
-export const getLastMeasurement = gql`
-{
-  getLastKnownMeasurement(metricName: $name) {
+export const getLastMeasurement  = gql`
+query($metricName: String!) {
+  getLastKnownMeasurement(metricName: $metricName) {
     metric,
     value,
     at
@@ -12,70 +11,9 @@ export const getLastMeasurement = gql`
 `;
 
 
-const tubingPressureLastMeasurement = gql`
-{
-  getLastKnownMeasurement(metricName: "tubingPressure") {
-    metric,
-    value,
-    at
-  }
-}
-`;
-
-const flareTempLastMeasurement = gql`
-{
-  getLastKnownMeasurement(metricName: "flareTemp") {
-    metric,
-    value,
-    at
-  }
-}
-`;
-
-const injValveOpenLastMeasurement = gql`
-{
-  getLastKnownMeasurement(metricName: "injValveOpen") {
-    metric,
-    value,
-    at
-  }
-}
-`;
-
-const oilTempLastMeasurement = gql`
-{
-  getLastKnownMeasurement(metricName: "oilTemp") {
-    metric,
-    value,
-    at
-  }
-}
-`;
-
-const casingPressureLastMeasurement = gql`
-{
-  getLastKnownMeasurement(metricName: "casingPressure") {
-    metric,
-    value,
-    at
-  }
-}
-`;
-
-const waterTempLastMeasurement = gql`
-{
-  getLastKnownMeasurement(metricName: "waterTemp") {
-    metric,
-    value,
-    at
-  }
-}
-`;
-
-
-const LATEST_RESULTS = gql`
-{
-  getMultipleMeasurements(input: {metricName: "tubingPressure" after: $after}) {
+export const getPastMeasurements = gql`
+query($metricName: String! $after: Timestamp!) {
+  getMultipleMeasurements(input: {metricName: $metricName after: $after}) {
     metric,
    	measurements {
       metric,
@@ -86,12 +24,3 @@ const LATEST_RESULTS = gql`
   }
 }
 `;
-
-export default {
-  "tubingPressure": tubingPressureLastMeasurement,
-  "flareTemp": flareTempLastMeasurement,
-  "injValveOpen": injValveOpenLastMeasurement,
-  "oilTemp": oilTempLastMeasurement,
-  "casingPressure": casingPressureLastMeasurement,
-  "waterTemp": waterTempLastMeasurement
-}

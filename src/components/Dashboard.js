@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from "../store/actions";
 import client from '../store/api/metricsAPI';
 import { ApolloProvider } from '@apollo/react-hooks';
+import Chart from './Chart';
 
 const useStyles = makeStyles({
   cardContainer: {
@@ -15,7 +16,13 @@ const useStyles = makeStyles({
   }
 });
 
-const Dashboard = ({ metrics, toggle, update }) => {
+
+function getTimestamp() {
+  let currentDate = new Date();
+  currentDate.setMinutes(currentDate.getMinutes() - 2);
+  return currentDate.getTime();
+}
+const Dashboard = ({ metrics, chart, toggle, setData, updateValues }) => {
   const classes = useStyles();
   return (
     <ApolloProvider client={client}>
@@ -23,16 +30,18 @@ const Dashboard = ({ metrics, toggle, update }) => {
         <h1>Dashboard</h1>
         <div className={classes.cardContainer}>
           {Object.keys(metrics).map((name, i) =>
-            <InfoCard key={i} {...metrics[name]} toggle={toggle} update={update} />
+            <InfoCard key={i} {...metrics[name]} toggle={toggle} setData={setData} updateValues={updateValues} />
           )}
         </div>
+        <Chart chart={chart} name="tubingPressure" after={getTimestamp()}/>
       </Container>
     </ApolloProvider>
   );
 }
 
 const mapStateToProps = state => ({
-  metrics: state.metrics
+  metrics: state.metrics,
+  chart: state.chart
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -40,9 +49,13 @@ const mapDispatchToProps = dispatch => ({
     type: actions.METRIC_TOGGLE,
     name
   }),
-  update: (name, value) => dispatch({
-    type: actions.METRIC_UPDATE,
+  setData: (name, data) => dispatch({
+    type: actions.CHART_ADD_DATA,
     name,
+    data
+  }),
+  updateValues: (value) => dispatch({
+    type: "SAGA_TEST",
     value
   })
 });

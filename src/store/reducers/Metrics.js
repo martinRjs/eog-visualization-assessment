@@ -14,32 +14,26 @@ const initialState = {
   [Metrics.FLARE_TEMP]: {
     name: Metrics.FLARE_TEMP,
     display: false,
-    data: []
   },
   [Metrics.INJ_VALVE_OPEN]: {
     name: Metrics.INJ_VALVE_OPEN,
     display: false,
-    data: []
   },
   [Metrics.TUBING_PRESSURE]: {
     name: Metrics.TUBING_PRESSURE,
     display: false,
-    data: []
   },
   [Metrics.OIL_TEMP]: {
     name: Metrics.OIL_TEMP,
     display: false,
-    data: []
   },
   [Metrics.WATER_TEMP]: {
     name: Metrics.WATER_TEMP,
     display: false,
-    data: []
   },
   [Metrics.CASING_PRESSURE]: {
     name: Metrics.CASING_PRESSURE,
     display: false,
-    data: []
   }
 };
 
@@ -54,7 +48,7 @@ const metricToggleHandler = (state, action) => {
 }
 
 const handlers = {
-  [actions.METRIC_TOGGLE]: metricToggleHandler,
+  [actions.METRIC_TOGGLE]: metricToggleHandler
 }
 
 const MetricsReducer = (state = initialState, action) => {
@@ -62,6 +56,5 @@ const MetricsReducer = (state = initialState, action) => {
   if (handler === undefined) return state;
   return handler(state, action);
 }
-
 
 export default MetricsReducer;
