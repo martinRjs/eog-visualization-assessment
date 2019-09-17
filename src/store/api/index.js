@@ -1,1 +1,3 @@
-export default {};
+import metricsAPI from './metricsAPI';
+
+export default { metricsAPI };

@@ -9,26 +9,21 @@ import { getLastMeasurement } from '../store/api/queries';
 import '../../src/App.css';
 
 const useStyles = makeStyles({
-  infoCard: {
-    backgroundColor: '#f9ca24',
-    color: 'white',
+  baseCard: {
+    color: '#fff',
     '&:hover': {
       cursor: 'pointer',
     }
   },
+  infoCard: {
+    backgroundColor: '#f9ca24'
+  },
   disabledCard: {
     backgroundColor: '#f6e58d',
-    color: '#535c68',
-    '&:hover': {
-      cursor: 'pointer'
-    }
+    color: '#535c68'
   },
   activeCard: {
-    backgroundColor: '#f0932b',
-    color: '#fff',
-    '&:hover': {
-      cursor: 'pointer'
-    }
+    backgroundColor: '#f0932b'
   },
   cardHeader: {
     display: 'flex',
@@ -42,7 +37,7 @@ const useStyles = makeStyles({
 const InfoCard = ({ name, display, toggle, updateValues, setActive, activeMetric }) => {
   const classes = useStyles();
   return (
-    <Card className={name === activeMetric ? classes.activeCard : display ? classes.infoCard : classes.disabledCard} onClick={() => setActive(name)}>
+    <Card className={`${classes.baseCard} ${name === activeMetric ? classes.activeCard : display ? classes.infoCard : classes.disabledCard}`} onClick={() => setActive(name)}>
       <CardContent className={classes.paddingRight}>
         <div className={classes.cardHeader}>
           <Typography>{name}</Typography>

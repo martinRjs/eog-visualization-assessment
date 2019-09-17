@@ -6,20 +6,10 @@ const initialState = {
 };
 
 const addMetricDataHandler = (state, action) => {
-  console.log('add data', action);
-  let newState = [...state];
-  
-  let formattedData = action.data.map(item => {
-    return {
-      [item.metric]: item.value,
-      at: item.at,
-      unit: item.unit
-    }
-  });
-
-  newState.push(...formattedData);
-
-  return newState;
+  return {
+    ...state,
+    data: action.data
+  }
 }
 
 const setActiveMetric = (state, action) => {
@@ -28,7 +18,6 @@ const setActiveMetric = (state, action) => {
     activeMetric: action.name
   }
 }
-
 
 const handlers = {
   [actions.CHART_ADD_DATA]: addMetricDataHandler,

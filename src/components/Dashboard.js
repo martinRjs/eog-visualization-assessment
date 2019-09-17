@@ -23,6 +23,7 @@ function getTimestamp() {
   currentDate.setMinutes(currentDate.getMinutes() - 30);
   return currentDate.getTime();
 }
+
 const Dashboard = ({ metrics, chart, toggle, setData, updateValues, setActive }) => {
   const classes = useStyles();
   return (

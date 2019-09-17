@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     color: '#fff',
     fontSize: '20px',
     '&:hover': {
-      cursor: 'pointer !important'
+      cursor: 'pointer'
     }
   }
 });
@@ -26,8 +26,8 @@ const ToggleButton = ({ toggle, name, display }) => {
     e.stopPropagation();
   }
   return (
-    <button className={classes.toggleButton} onClick={toggleFetch}>{
-      display ? <FontAwesomeIcon icon={faToggleOn} /> : <FontAwesomeIcon icon={faToggleOff} />}
+    <button className={classes.toggleButton} onClick={toggleFetch}>
+      {display ? <FontAwesomeIcon icon={faToggleOn} /> : <FontAwesomeIcon icon={faToggleOff} />}
     </button>
   )
 };
