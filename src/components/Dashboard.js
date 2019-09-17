@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 
 function getTimestamp() {
   let currentDate = new Date();
-  currentDate.setMinutes(currentDate.getMinutes() - 2);
+  currentDate.setMinutes(currentDate.getMinutes() - 30);
   return currentDate.getTime();
 }
 const Dashboard = ({ metrics, chart, toggle, setData, updateValues, setActive }) => {

@@ -10,6 +10,7 @@ import Wrapper from "./components/Wrapper";
 import Dashboard from './components/Dashboard';
 import client from './store/api/metricsAPI';
 import { ApolloProvider } from '@apollo/react-hooks';
+import './App.css';
 
 const store = createStore();
 const theme = createMuiTheme({

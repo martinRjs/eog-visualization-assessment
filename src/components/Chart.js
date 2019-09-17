@@ -15,10 +15,7 @@ const useStyles = makeStyles({
 
 const CustomTooltip = ({payload, label}) => {
   const classes = useStyles();
-  const data = payload.length > 0 ? payload[0].payload : null
-  console.log(label);
-  console.log(data);
-
+  const data = payload.length > 0 ? payload[0].payload : null;
 
   return (
     <div className={classes.tooltip}>
@@ -28,6 +25,12 @@ const CustomTooltip = ({payload, label}) => {
     </div>
   );
 };
+
+const dateFormatter = (t) => {
+  const [h, m, rest] = new Date(t).toLocaleTimeString().split(':');
+  const sufix = rest.split(' ')[1];
+  return `${h}:${m} ${sufix.toLowerCase()}`;
+}
 
 const Chart = ({ chart, after }) => {
   const { loading, error, data } = useQuery(getPastMeasurements, {
@@ -39,21 +42,21 @@ const Chart = ({ chart, after }) => {
   );
 
   if (loading) {
-    return <div>loading</div>;
+    return <code>loading . . .</code>;
   }
   if (error) {
     return <div>error</div>;
   }
 
   console.log(data.getMultipleMeasurements[0].measurements);
-  return chart.activeMetric === "" ? <span>no option</span> :
+  return chart.activeMetric === "" ? <code>Select one of the options above</code> :
     <>
       <h2>{chart.activeMetric}</h2>
-      <ResponsiveContainer width={900} height={200} >
+      <ResponsiveContainer width="100%" height={300} >
         <LineChart data={data.getMultipleMeasurements[0].measurements} >
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <XAxis dataKey="at" />
-          <YAxis />
+          <XAxis dataKey="at" interval="preserveStartEnd" tickFormatter={dateFormatter} minTickGap={20}/>
+          <YAxis tickCount={6}/>
           <Legend />
           <Tooltip content={<CustomTooltip />}/>
     
