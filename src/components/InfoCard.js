@@ -34,7 +34,7 @@ const useStyles = makeStyles({
   }
 });
 
-const InfoCard = ({ name, display, toggle, updateValues, setActive, activeMetric }) => {
+const InfoCard = ({ name, display, toggle, updateValues, setActive, activeMetric, showError }) => {
   const classes = useStyles();
   return (
     <Card className={`${classes.baseCard} ${name === activeMetric ? classes.activeCard : display ? classes.infoCard : classes.disabledCard}`} onClick={() => setActive(name)}>
@@ -48,7 +48,10 @@ const InfoCard = ({ name, display, toggle, updateValues, setActive, activeMetric
             <Query query={getLastMeasurement} pollInterval={1300} variables={{ metricName: name }}>
               {({ loading, error, data }) => {
                 if (loading) return "Loading...";
-                if (error) return `Error! ${error.message}`;
+                if (error) {
+                  showError(error);
+                  return "Error loading data"; 
+                }
                 // updateValues(name, data.getLastKnownMeasurement.value);
                 return (
                   <span>

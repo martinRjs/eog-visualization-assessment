@@ -10,7 +10,7 @@ const dateFormatter = (t) => {
   return `${h}:${m} ${sufix.toLowerCase()}`;
 }
 
-const Chart = ({ chart, after }) => {
+const Chart = ({ chart, after, showError }) => {
   const { loading, error, data } = useQuery(getPastMeasurements, {
     variables: {
       metricName: chart.activeMetric,
@@ -22,7 +22,8 @@ const Chart = ({ chart, after }) => {
     return <code>loading . . .</code>;
   }
   if (error) {
-    return <div>error</div>;
+      showError(error);
+      return "Error loading data"; 
   }
 
   const measurements = data.getMultipleMeasurements[0].measurements;

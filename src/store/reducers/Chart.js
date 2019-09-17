@@ -1,6 +1,9 @@
 import * as actions from '../actions';
+import { loadState } from '../../store/localStorage';
 
-const initialState = {
+const savedState = loadState();
+
+const initialState = savedState ? savedState.chart :{
   activeMetric: "",
   data: []
 };

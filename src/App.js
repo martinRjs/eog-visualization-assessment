@@ -11,6 +11,7 @@ import Dashboard from './components/Dashboard';
 import client from './store/api/';
 import { ApolloProvider } from '@apollo/react-hooks';
 import './App.css';
+import {saveState} from './store/localStorage';
 
 const store = createStore();
 const theme = createMuiTheme({
@@ -28,6 +29,10 @@ const theme = createMuiTheme({
       main: "rgb(226,231,238)"
     }
   }
+});
+
+store.subscribe(() => {
+  saveState(store.getState());
 });
 
 const App = props => (

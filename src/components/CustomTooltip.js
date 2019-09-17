@@ -13,13 +13,11 @@ const CustomTooltip = ({ payload }) => {
   const classes = useStyles();
   const data = payload.length > 0 ? payload[0].payload : null;
 
-  return (
-    <div className={classes.tooltip}>
-      <p>{data ? new Date(data.at).toLocaleTimeString() : null}</p>
-      <span>{data ? data.metric : null}: {data ? data.value : null}</span><br />
-      <span>unit: {data ? data.unit : null}</span>
-    </div>
-  );
-};
+  return data ? <div className={classes.tooltip}>
+    <p>{new Date(data.at).toLocaleTimeString()}</p>
+    <span>{data.metric}: {data.value}</span><br />
+    <span>unit: {data.unit}</span>
+  </div> : null
+}
 
 export default CustomTooltip;

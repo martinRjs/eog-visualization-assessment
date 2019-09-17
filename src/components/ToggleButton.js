@@ -20,11 +20,12 @@ const useStyles = makeStyles({
 
 const ToggleButton = ({ toggle, name, display }) => {
   const classes = useStyles();
+  
   const toggleFetch = (e) => {
     toggle(name);
-    debugger;
     e.stopPropagation();
   }
+
   return (
     <button className={classes.toggleButton} onClick={toggleFetch}>
       {display ? <FontAwesomeIcon icon={faToggleOn} /> : <FontAwesomeIcon icon={faToggleOff} />}

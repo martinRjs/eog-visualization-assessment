@@ -1,5 +1,5 @@
 import * as actions from '../actions';
-
+import { loadState } from '../../store/localStorage';
 
 const Metrics = {
   TUBING_PRESSURE: 'tubingPressure',
@@ -10,7 +10,9 @@ const Metrics = {
   WATER_TEMP: 'waterTemp'
 }
 
-const initialState = {
+const savedState = loadState();
+
+const initialState = savedState ? savedState.metrics : {
   [Metrics.FLARE_TEMP]: {
     name: Metrics.FLARE_TEMP,
     display: false

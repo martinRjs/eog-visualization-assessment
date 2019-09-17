@@ -24,7 +24,7 @@ function getTimestamp() {
   return currentDate.getTime();
 }
 
-const Dashboard = ({ metrics, chart, toggle, setData, updateValues, setActive }) => {
+const Dashboard = ({ metrics, chart, toggle, setData, updateValues, setActive, showError }) => {
   const classes = useStyles();
   return (
     <ApolloProvider client={client}>
@@ -39,10 +39,11 @@ const Dashboard = ({ metrics, chart, toggle, setData, updateValues, setActive })
               updateValues={updateValues} 
               setActive={setActive}
               activeMetric={chart.activeMetric}
+              showError={showError}
             />
           )}
         </div>
-        <Chart chart={chart} after={getTimestamp()}/>
+        <Chart chart={chart} after={getTimestamp()} showError={showError}/>
       </Container>
     </ApolloProvider>
   );
@@ -66,6 +67,10 @@ const mapDispatchToProps = dispatch => ({
     type: actions.CHART_ADD_DATA,
     name,
     data
+  }),
+  showError: (error) => dispatch({
+    type: actions.API_ERROR,
+    error
   }),
   updateValues: (value) => dispatch({
     type: "SAGA_TEST",
