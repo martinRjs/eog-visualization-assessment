@@ -22,13 +22,17 @@ const addMetricDataHandler = (state, action) => {
   return newState;
 }
 
-const removeMetricDataHandler = (state, action) => {
-  return state;
+const setActiveMetric = (state, action) => {
+  return {
+    ...state,
+    activeMetric: action.name
+  }
 }
+
 
 const handlers = {
   [actions.CHART_ADD_DATA]: addMetricDataHandler,
-  [actions.CHART_REMOVE_DATA]: removeMetricDataHandler
+  [actions.CHART_SET_ACTIVE_METRIC]: setActiveMetric
 }
 
 const ChartReducer = (state = initialState, action) => {

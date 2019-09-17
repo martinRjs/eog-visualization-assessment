@@ -11,8 +11,9 @@ import Chart from './Chart';
 const useStyles = makeStyles({
   cardContainer: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr));',
-    gridGap: '5px'
+    gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr));',
+    gridGap: '5px',
+    marginBottom: '25px'
   }
 });
 
@@ -22,7 +23,7 @@ function getTimestamp() {
   currentDate.setMinutes(currentDate.getMinutes() - 2);
   return currentDate.getTime();
 }
-const Dashboard = ({ metrics, chart, toggle, setData, updateValues }) => {
+const Dashboard = ({ metrics, chart, toggle, setData, updateValues, setActive }) => {
   const classes = useStyles();
   return (
     <ApolloProvider client={client}>
@@ -30,10 +31,17 @@ const Dashboard = ({ metrics, chart, toggle, setData, updateValues }) => {
         <h1>Dashboard</h1>
         <div className={classes.cardContainer}>
           {Object.keys(metrics).map((name, i) =>
-            <InfoCard key={i} {...metrics[name]} toggle={toggle} setData={setData} updateValues={updateValues} />
+            <InfoCard key={i} 
+              {...metrics[name]} 
+              toggle={toggle} 
+              setData={setData} 
+              updateValues={updateValues} 
+              setActive={setActive}
+              activeMetric={chart.activeMetric}
+            />
           )}
         </div>
-        <Chart chart={chart} name="tubingPressure" after={getTimestamp()}/>
+        <Chart chart={chart} after={getTimestamp()}/>
       </Container>
     </ApolloProvider>
   );
@@ -46,7 +54,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggle: (name) => dispatch({
-    type: actions.METRIC_TOGGLE,
+    type: actions.METRIC_TOGGLE_FETCH,
+    name
+  }),
+  setActive: (name) => dispatch({
+    type: actions.CHART_SET_ACTIVE_METRIC,
     name
   }),
   setData: (name, data) => dispatch({

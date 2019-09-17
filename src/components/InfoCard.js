@@ -1,4 +1,5 @@
 import React from 'react';
+import ToggleButton from './ToggleButton';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography';
@@ -12,7 +13,7 @@ const useStyles = makeStyles({
     backgroundColor: '#f9ca24',
     color: 'white',
     '&:hover': {
-      cursor: 'pointer'
+      cursor: 'pointer',
     }
   },
   disabledCard: {
@@ -21,23 +22,39 @@ const useStyles = makeStyles({
     '&:hover': {
       cursor: 'pointer'
     }
+  },
+  activeCard: {
+    backgroundColor: '#f0932b',
+    color: '#fff',
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  },
+  cardHeader: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  paddingRight: {
+    paddingRight: '5px'
   }
 });
 
-const InfoCard = ({ name, display, toggle, setData, updateValues }) => {
+const InfoCard = ({ name, display, toggle, updateValues, setActive, activeMetric }) => {
   const classes = useStyles();
   return (
-    <Card className={display ? classes.infoCard : classes.disabledCard}>
-      <CardContent>
-        <Typography>{name}</Typography>
-        <button onClick={() => toggle(name)}>On</button>
+    <Card className={name === activeMetric ? classes.activeCard : display ? classes.infoCard : classes.disabledCard} onClick={() => setActive(name)}>
+      <CardContent className={classes.paddingRight}>
+        <div className={classes.cardHeader}>
+          <Typography>{name}</Typography>
+          <ToggleButton toggle={toggle} name={name} display={display} />
+        </div>
         {
           display ?
             <Query query={getLastMeasurement} pollInterval={1300} variables={{ metricName: name }}>
               {({ loading, error, data }) => {
                 if (loading) return "Loading...";
                 if (error) return `Error! ${error.message}`;
-                updateValues(name, data.getLastKnownMeasurement.value);
+                // updateValues(name, data.getLastKnownMeasurement.value);
                 return (
                   <span>
                     <Typography variant="h4">{data.getLastKnownMeasurement.value}</Typography>
