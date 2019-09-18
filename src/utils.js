@@ -1,12 +1,3 @@
-export const Metrics = {
-  TUBING_PRESSURE: 'tubingPressure',
-  FLARE_TEMP: 'flareTemp',
-  INJ_VALVE_OPEN: 'injValveOpen',
-  OIL_TEMP: 'oilTemp',
-  CASING_PRESSURE: 'casingPressure',
-  WATER_TEMP: 'waterTemp'
-}
-
 export const dateFormatter = (t) => {
   const [h, m, rest] = new Date(t).toLocaleTimeString().split(':');
   const sufix = rest.split(' ')[1];

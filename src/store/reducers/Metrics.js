@@ -1,32 +1,6 @@
 import * as actions from '../actions';
-import {Metrics} from '../../utils';
 
-const initialState = {
-  [Metrics.FLARE_TEMP]: {
-    name: Metrics.FLARE_TEMP,
-    display: false
-  },
-  [Metrics.INJ_VALVE_OPEN]: {
-    name: Metrics.INJ_VALVE_OPEN,
-    display: false
-  },
-  [Metrics.TUBING_PRESSURE]: {
-    name: Metrics.TUBING_PRESSURE,
-    display: false,
-  },
-  [Metrics.OIL_TEMP]: {
-    name: Metrics.OIL_TEMP,
-    display: false
-  },
-  [Metrics.WATER_TEMP]: {
-    name: Metrics.WATER_TEMP,
-    display: false
-  },
-  [Metrics.CASING_PRESSURE]: {
-    name: Metrics.CASING_PRESSURE,
-    display: false
-  }
-};
+const initialState = {};
 
 const metricToggleFetchHandler = (state, action) => {
   return {
@@ -38,19 +12,23 @@ const metricToggleFetchHandler = (state, action) => {
   };
 }
 
-const metricEnableToggle = (state, action) => {
-  return {
-    ...state,
-    [action.name]: {
-      ...state[action.name],
-      display: true
+const metricSetCategoriesHandler = (state, action) => {
+  return action.metrics ? action.metrics.reduce((obj, metric) => {
+    if (obj[metric] === undefined) {
+      obj[metric] = {
+        name: metric,
+        display: false
+      }
     }
-  };
+
+    return obj;
+  }, {}) : initialState;
 }
+
 
 const handlers = {
   [actions.METRIC_TOGGLE_FETCH]: metricToggleFetchHandler,
-  [actions.CHART_SET_ACTIVE_METRIC]: metricEnableToggle
+  [actions.METRIC_SET_CATEGORIES]: metricSetCategoriesHandler
 }
 
 const MetricsReducer = (state = initialState, action) => {

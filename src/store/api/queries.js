@@ -24,3 +24,8 @@ export const getPastMeasurements = gql`
     }
   }
   `;
+
+  export const getMetrics = gql`{	
+    getMetrics
+  }
+  `;
