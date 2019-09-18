@@ -1,5 +1,4 @@
 import * as actions from '../actions';
-import { loadState } from '../../store/localStorage';
 
 const Metrics = {
   TUBING_PRESSURE: 'tubingPressure',
@@ -10,9 +9,7 @@ const Metrics = {
   WATER_TEMP: 'waterTemp'
 }
 
-const savedState = loadState();
-
-const initialState = savedState ? savedState.metrics : {
+const initialState = {
   [Metrics.FLARE_TEMP]: {
     name: Metrics.FLARE_TEMP,
     display: false
@@ -69,5 +66,10 @@ const MetricsReducer = (state = initialState, action) => {
   if (handler === undefined) return state;
   return handler(state, action);
 }
+
+export const selectActiveMetrics = (state) => {
+  const metrics = state.metrics;
+  return Object.keys(metrics).filter(metric => metrics[metric].display);
+};
 
 export default MetricsReducer;

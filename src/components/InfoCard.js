@@ -8,6 +8,7 @@ import { Query } from 'react-apollo'
 import { getLastMeasurement } from '../store/api/queries';
 import '../../src/App.css';
 
+
 const useStyles = makeStyles({
   baseCard: {
     color: '#fff',
@@ -22,9 +23,6 @@ const useStyles = makeStyles({
     backgroundColor: '#f6e58d',
     color: '#535c68'
   },
-  activeCard: {
-    backgroundColor: '#f0932b'
-  },
   cardHeader: {
     display: 'flex',
     justifyContent: 'space-between'
@@ -34,10 +32,10 @@ const useStyles = makeStyles({
   }
 });
 
-const InfoCard = ({ name, display, toggle, updateValues, setActive, activeMetric, showError }) => {
+const InfoCard = ({ name, display, toggle, showError }) => {
   const classes = useStyles();
   return (
-    <Card className={`${classes.baseCard} ${name === activeMetric ? classes.activeCard : display ? classes.infoCard : classes.disabledCard}`} onClick={() => setActive(name)}>
+    <Card className={`${classes.baseCard} ${display ? classes.infoCard : classes.disabledCard}`} onClick={() => toggle(name)}>
       <CardContent className={classes.paddingRight}>
         <div className={classes.cardHeader}>
           <Typography>{name}</Typography>
@@ -52,7 +50,7 @@ const InfoCard = ({ name, display, toggle, updateValues, setActive, activeMetric
                   showError(error);
                   return "Error loading data"; 
                 }
-                // updateValues(name, data.getLastKnownMeasurement.value);
+
                 return (
                   <span>
                     <Typography variant="h4">{data.getLastKnownMeasurement.value}</Typography>

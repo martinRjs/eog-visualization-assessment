@@ -7,6 +7,7 @@ import * as actions from "../store/actions";
 import client from '../store/api/metricsAPI';
 import { ApolloProvider } from '@apollo/react-hooks';
 import Chart from './Chart';
+import { selectActiveMetrics } from '../store/reducers/Metrics';
 
 const useStyles = makeStyles({
   cardContainer: {
@@ -17,14 +18,7 @@ const useStyles = makeStyles({
   }
 });
 
-
-function getTimestamp() {
-  let currentDate = new Date();
-  currentDate.setMinutes(currentDate.getMinutes() - 30);
-  return currentDate.getTime();
-}
-
-const Dashboard = ({ metrics, chart, toggle, setData, updateValues, setActive, showError }) => {
+const Dashboard = ({ metrics, activeMetrics, toggle, setData, updateValues, setActive, showError }) => {
   const classes = useStyles();
   return (
     <ApolloProvider client={client}>
@@ -38,12 +32,11 @@ const Dashboard = ({ metrics, chart, toggle, setData, updateValues, setActive, s
               setData={setData} 
               updateValues={updateValues} 
               setActive={setActive}
-              activeMetric={chart.activeMetric}
               showError={showError}
             />
           )}
         </div>
-        <Chart chart={chart} after={getTimestamp()} showError={showError}/>
+        <Chart activeMetrics={activeMetrics} showError={showError}/>
       </Container>
     </ApolloProvider>
   );
@@ -51,16 +44,13 @@ const Dashboard = ({ metrics, chart, toggle, setData, updateValues, setActive, s
 
 const mapStateToProps = state => ({
   metrics: state.metrics,
-  chart: state.chart
+  chart: state.chart,
+  activeMetrics: selectActiveMetrics(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   toggle: (name) => dispatch({
     type: actions.METRIC_TOGGLE_FETCH,
-    name
-  }),
-  setActive: (name) => dispatch({
-    type: actions.CHART_SET_ACTIVE_METRIC,
     name
   }),
   setData: (name, data) => dispatch({
@@ -71,10 +61,6 @@ const mapDispatchToProps = dispatch => ({
   showError: (error) => dispatch({
     type: actions.API_ERROR,
     error
-  }),
-  updateValues: (value) => dispatch({
-    type: "SAGA_TEST",
-    value
   })
 });
 

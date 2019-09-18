@@ -4,19 +4,18 @@ import createSagaMiddleware from "redux-saga";
 import sagas from "./sagas";
 import weatherReducer from "./reducers/Weather";
 import metricsReducer from './reducers/Metrics';
-import chartReducer from './reducers/Chart';
+import { loadState } from '../store/localStorage';
 
 export default () => {
   const rootReducer = combineReducers({
     weather: weatherReducer,
-    metrics: metricsReducer,
-    chart: chartReducer
+    metrics: metricsReducer
   });
 
   const composeEnhancers = composeWithDevTools({});
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = applyMiddleware(sagaMiddleware);
-  const store = createStore(rootReducer, composeEnhancers(middlewares));
+  const store = createStore(rootReducer, loadState(), composeEnhancers(middlewares));
 
   sagas.forEach(sagaMiddleware.run);
 
