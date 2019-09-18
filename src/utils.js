@@ -6,7 +6,7 @@ export const dateFormatter = (t) => {
 
 export function getTimestamp() {
   let currentDate = new Date();
-  currentDate.setMinutes(currentDate.getMinutes() - 10);
+  currentDate.setMinutes(currentDate.getMinutes() - 20);
   return currentDate.getTime();
 }
 

@@ -24,7 +24,7 @@ const Dashboard = ({ metrics, setMetricsCategories, activeMetrics, toggle, updat
 
   useEffect(() => {
     getMetricLabels().then(data => setMetricsCategories(data.data.getMetrics));
-  }, [])
+  }, []);
 
   return (
     <ApolloProvider client={client}>
