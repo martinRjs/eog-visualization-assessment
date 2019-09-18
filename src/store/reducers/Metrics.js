@@ -13,6 +13,8 @@ const metricToggleFetchHandler = (state, action) => {
 }
 
 const metricSetCategoriesHandler = (state, action) => {
+  if(state) return state;
+  
   return action.metrics ? action.metrics.reduce((obj, metric) => {
     if (obj[metric] === undefined) {
       obj[metric] = {
