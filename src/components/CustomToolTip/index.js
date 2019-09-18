@@ -5,7 +5,7 @@ import {useStyles} from './styles';
 const CustomTooltip = ({ payload }) => {
   const classes = useStyles();
   
-  const data = payload.length > 0 ? payload[0].payload : null;
+  const data = payload ? payload.length > 0 ? payload[0].payload : null : null;
   const units = data ? data.units : null;
 
   return data ? (<div className={classes.tooltip}>
