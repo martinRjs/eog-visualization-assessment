@@ -15,17 +15,14 @@ export const getMeasurements = async (activeMetrics, after) => {
 
   const responses = await Promise.all(promises).then( data => {
     const metrics = data.map(data => data.data.getMultipleMeasurements[0].measurements);
-
     const metricsLength = metrics[0].length;
     const measurements = [];
 
     for(let i = 0; i < metricsLength; i++) {
       let obj = {};
-
       for(let j = 0; j < activeMetrics.length; j++) {
         const current = metrics[j][i];
-        
-        
+
         obj[current.metric] = current.value;
 
         if(!obj.at) {
@@ -43,6 +40,7 @@ export const getMeasurements = async (activeMetrics, after) => {
 
       measurements.push(obj);
     }
+    
     return measurements;
   });
   

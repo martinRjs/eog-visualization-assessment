@@ -1,36 +1,12 @@
 import React from 'react';
-import ToggleButton from './ToggleButton';
+import ToggleButton from '../ToggleButton/';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import { Query } from 'react-apollo'
-import { getLastMeasurement } from '../store/api/queries';
-import '../../src/App.css';
+import { getLastMeasurement } from '../../store/api/queries';
+import { useStyles } from './styles';
 
-
-const useStyles = makeStyles({
-  baseCard: {
-    color: '#fff',
-    '&:hover': {
-      cursor: 'pointer',
-    }
-  },
-  infoCard: {
-    backgroundColor: '#f9ca24'
-  },
-  disabledCard: {
-    backgroundColor: '#f6e58d',
-    color: '#535c68'
-  },
-  cardHeader: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
-  paddingRight: {
-    paddingRight: '5px'
-  }
-});
 
 const InfoCard = ({ name, display, toggle, showError }) => {
   const classes = useStyles();
@@ -48,7 +24,7 @@ const InfoCard = ({ name, display, toggle, showError }) => {
                 if (loading) return "Loading...";
                 if (error) {
                   showError(error);
-                  return "Error loading data"; 
+                  return "Error loading data";
                 }
 
                 return (

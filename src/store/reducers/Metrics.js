@@ -1,13 +1,5 @@
 import * as actions from '../actions';
-
-const Metrics = {
-  TUBING_PRESSURE: 'tubingPressure',
-  FLARE_TEMP: 'flareTemp',
-  INJ_VALVE_OPEN: 'injValveOpen',
-  OIL_TEMP: 'oilTemp',
-  CASING_PRESSURE: 'casingPressure',
-  WATER_TEMP: 'waterTemp'
-}
+import {Metrics} from '../../utils';
 
 const initialState = {
   [Metrics.FLARE_TEMP]: {

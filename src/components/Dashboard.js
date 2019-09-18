@@ -1,12 +1,12 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import InfoCard from './InfoCard'
+import InfoCard from './InfoCard/';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import * as actions from "../store/actions";
 import client from '../store/api/metricsAPI';
 import { ApolloProvider } from '@apollo/react-hooks';
-import Chart from './Chart';
+import Chart from './Chart/';
 import { selectActiveMetrics } from '../store/reducers/Metrics';
 
 const useStyles = makeStyles({
